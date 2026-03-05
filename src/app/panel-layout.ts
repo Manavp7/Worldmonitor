@@ -297,6 +297,11 @@ export class PanelLayoutManager implements AppModule {
           ${SITE_VARIANT === 'happy' ? '<button class="tv-exit-btn" id="tvExitBtn">Exit TV Mode</button>' : ''}
           <div class="map-resize-handle" id="mapResizeHandle"></div>
           <div class="map-bottom-grid" id="mapBottomGrid"></div>
+          <div class="map-floating-actions">
+            <button class="map-action-btn" data-action="open-news">News Feed</button>
+            <button class="map-action-btn" data-action="open-webcams">Live Cams</button>
+            <button class="map-action-btn" data-action="show-panels">Dashboard</button>
+          </div>
         </div>
         <div class="panels-grid" id="panelsGrid"></div>
         <button class="search-mobile-fab" id="searchMobileFab" aria-label="Search">\u{1F50D}</button>
@@ -308,6 +313,8 @@ export class PanelLayoutManager implements AppModule {
     if (this.ctx.isMobile) {
       this.setupMobileMapToggle();
     }
+
+    this.setupMapActions();
   }
 
   private setupMobileMapToggle(): void {
@@ -333,6 +340,33 @@ export class PanelLayoutManager implements AppModule {
       updateBtn(btn, isCollapsed);
       localStorage.setItem('mobile-map-collapsed', String(isCollapsed));
       if (!isCollapsed) window.dispatchEvent(new Event('resize'));
+    });
+  }
+
+  private setupMapActions(): void {
+    const mapSection = document.getElementById('mapSection');
+    const panelsGrid = document.getElementById('panelsGrid');
+    if (!mapSection || !panelsGrid) return;
+
+    document.body.classList.add('map-only');
+
+    const buttons = mapSection.querySelectorAll<HTMLButtonElement>('.map-action-btn');
+    buttons.forEach((btn) => {
+      const action = btn.dataset.action;
+      if (action === 'show-panels') {
+        btn.addEventListener('click', () => {
+          document.body.classList.remove('map-only');
+          panelsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      } else if (action === 'open-news') {
+        btn.addEventListener('click', () => {
+          window.open('live-channels.html', '_blank', 'noopener');
+        });
+      } else if (action === 'open-webcams') {
+        btn.addEventListener('click', () => {
+          window.open('live-channels.html#webcams', '_blank', 'noopener');
+        });
+      }
     });
   }
 

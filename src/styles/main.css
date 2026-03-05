@@ -372,6 +372,40 @@ canvas,
   color: var(--accent);
 }
 
+/* Map-only layout + floating actions */
+.map-only .panels-grid {
+  display: none;
+}
+
+.map-section {
+  position: relative;
+}
+
+.map-floating-actions {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 20;
+}
+
+.map-action-btn {
+  background: var(--overlay-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.map-action-btn:hover {
+  background: var(--accent-soft);
+}
+
 .logo-mobile {
   display: none;
   font-weight: bold;
