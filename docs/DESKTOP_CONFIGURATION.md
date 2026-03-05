@@ -48,6 +48,14 @@ Desktop builds persist secrets in OS credential storage through Tauri command bi
 
 Secrets are **not stored in plaintext files** by the frontend.
 
+## Settings window tabs
+
+The desktop settings window (opened with `Cmd+,`) is organized into three tabs:
+
+- **LLMs**: configure local endpoints (Ollama / LM Studio) and cloud providers (Groq, OpenRouter). Each change triggers non-blocking verification against the selected provider.
+- **API Keys**: manage all data-source credentials (FRED, EIA, ACLED, AIS, OpenSky, WTO, etc.) using the consolidated OS keychain vault — one secure entry instead of many.
+- **Debug & Logs**: control verbose logging for the local sidecar, inspect recent API traffic, and open log files from the host OS for troubleshooting desktop deployments.
+
 ## Degradation behavior
 
 If required secrets are missing/disabled:
